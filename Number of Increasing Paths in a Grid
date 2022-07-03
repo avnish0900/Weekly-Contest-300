@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int dp[1003][1003];
+    int mod = 1e9 + 7;
+    int dfs(vector<vector<int>>& arr, int i, int j, int prev){
+        if(i < 0 or j < 0 or i>=arr.size() or j>=arr[0].size() or arr[i][j] <= prev){
+            return 0;
+        }
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        return dp[i][j] = (1LL + dfs(arr, i+1, j, arr[i][j]) + dfs(arr, i-1, j, arr[i][j]) + 
+                                dfs(arr, i, j+1, arr[i][j]) + dfs(arr, i, j-1, arr[i][j])) % mod;
+    }
+    int countPaths(vector<vector<int>>& arr) {
+        memset(dp, -1, sizeof dp);
+        int ans = 0;
+        int n = arr.size(), m = arr[0].size();
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                ans = (ans + dfs(arr, i, j, 0)) % mod;
+            }
+        }
+        return ans;
+    }
+};
