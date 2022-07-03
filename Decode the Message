@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string decodeMessage(string key, string message) {
+        map<char, char> code;
+        char c = 'a';
+        set<char> s;
+        for(char ch: key){
+            if(ch == ' '){
+                continue;
+            }
+            if(s.find(ch) == s.end()){
+                s.insert(ch);
+                code[ch] = c;
+                c++;
+            }
+        }
+        string ans;
+        for(char ch: message){
+            if(ch == ' '){
+                ans += " ";
+                continue;
+            }
+            if(code.find(ch) != code.end()){
+                ans += code[ch];
+            }
+        }
+        return ans;
+    }
+};
